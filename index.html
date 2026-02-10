@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Open 50 Sites</title>
+  <meta charset="UTF-8">
+  <title>Open 50 Pages</title>
   <style>
     body {
+      background: #0f0f0f;
+      color: #fff;
       font-family: Arial, sans-serif;
       display: flex;
       height: 100vh;
       align-items: center;
       justify-content: center;
-      background: #111;
-      color: #fff;
+    }
+    .box {
+      text-align: center;
+    }
+    input {
+      padding: 10px;
+      width: 320px;
+      font-size: 16px;
+      margin-bottom: 12px;
     }
     button {
-      padding: 16px 24px;
-      font-size: 18px;
+      padding: 12px 20px;
+      font-size: 16px;
       cursor: pointer;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       background: #4caf50;
-      color: #fff;
+      color: white;
     }
     button:hover {
       background: #43a047;
@@ -29,22 +38,32 @@
 </head>
 <body>
 
-<button onclick="openSites()">Open 50 Sites</button>
+<div class="box">
+  <h2>Enter a URL ending in a number</h2>
+  <input id="urlInput" placeholder="https://example.com/page/1" />
+  <br>
+  <button onclick="open50()">Open 50 Pages</button>
+</div>
 
 <script>
-  const urls = [
-    "https://example1.com",
-    "https://example2.com",
-    "https://example3.com"
-    // add up to 50 URLs here
-  ];
+  function open50() {
+    const input = document.getElementById("urlInput").value.trim();
+    const match = input.match(/(.*?)(\d+)$/);
 
-  function openSites() {
-    urls.slice(0, 50).forEach((url, index) => {
+    if (!match) {
+      alert("URL must end with a number (e.g. /1)");
+      return;
+    }
+
+    const base = match[1];
+    const startNum = parseInt(match[2], 10);
+
+    for (let i = 0; i < 50; i++) {
+      const url = base + (startNum + i);
       setTimeout(() => {
         window.open(url, "_blank");
-      }, index * 200); // delay helps avoid popup blocking
-    });
+      }, i * 200);
+    }
   }
 </script>
 
